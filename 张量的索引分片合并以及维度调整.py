@@ -21,8 +21,8 @@ print(t1[1, ::2, ::2])
 print(t1[::2, ::2, ::2])
 
 # ------------函数索引
-t2 = torch.arange(1, 28).reshape(3, 3)
-print(t2.ndimension())
+t2 = torch.arange(1, 28).reshape(9, 3)
+print(t2)
 indices = torch.tensor([1, 2])
 # 将t2，从第一个维度进行索引[1,2]，即返回2，3
 # 高维时用起来比较方便，且意思清晰
@@ -34,3 +34,14 @@ print(t3)
 # 构建一个数据相同，但形状不同的“视图”
 t4 = t3.view(3, 2)
 print(t4)
+
+# view还可以修改维度
+# 创建了一个3维张量
+t5 = t4.view(1, 2, 3)
+print(t5)
+
+# ------------张量的分片函数
+t6 = torch.arange(12).reshape(4, 3)
+# 在0维度上，按行，进行四等分,返回的也是一个“视图”。不是新生成的对象。
+t6 = torch.chunk(t6, 4, dim=0)
+print(t6)
