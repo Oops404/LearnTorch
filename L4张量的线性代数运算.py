@@ -151,4 +151,33 @@ c = torch.mv(torch.inverse(a3), b3)
 # c的元素，即是对方程系数的解，即 y=ax+b，中的a和b。
 
 
-# 矩阵的分解
+# 矩阵的分解 （SVD分解/降维）
+'''
+任何矩阵A 可以看成   A = A * A^-1 * A，也可以看成某种意义上的分解。
+大多数形况下，矩阵分解：A = V * U * D
+'''
+# 特征分解
+'''
+特征分解中，矩阵分解形式为：
+    A = Q * λ * Q^-1
+其中Q和Q^-1互为逆矩阵，并且Q的列就是A的特征值对应的特征向量，而λ为矩阵
+A的特征值按照降序排列组成的对角矩阵。
+torch.eig：特征分解
+'''
+'''
+特征值：矩阵的一列所包含的信息量。见视频1小时处讲解的eig函数部分
+'''
+a4 = torch.arange(1, 10).reshape(3, 3).float()
+# 此处eigenvectors=True会返回完整的 Q 和 λ。
+torch.eig(a4, eigenvectors=True)
+# 返回结果中，eigenvalues是特征向量，即A矩阵分解后的λ矩阵的对角线元素值。
+# eigenvectors是A矩阵分解后的Q矩阵。
+
+b4 = torch.tensor([1, 2, 2, 4]).reshape(2, 2).float()
+torch.matrix_rank(b4)
+torch.eig(b4)
+
+c1 = torch.tensor([[1, 2, 3], [2, 4, 6], [3, 6, 9]])
+# 特征值结果 第二第三个几乎接近于0，因此能够表示，该矩阵其实用一列的线性关系就能把其他列表示出来。
+# 这就是为了识别出高有效的列，后面用于降维。
+torch.eig(c1)
