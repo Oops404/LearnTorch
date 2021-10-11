@@ -1,5 +1,6 @@
 import torch
-import numpy as np
+
+# import numpy as np
 
 # 矩阵的形变与特殊矩阵的构造方法
 '''
@@ -181,3 +182,18 @@ c1 = torch.tensor([[1, 2, 3], [2, 4, 6], [3, 6, 9]])
 # 特征值结果 第二第三个几乎接近于0，因此能够表示，该矩阵其实用一列的线性关系就能把其他列表示出来。
 # 这就是为了识别出高有效的列，后面用于降维->奇异值分解（SVD）
 torch.eig(c1)
+
+# 奇异值分解SVD
+torch.svd(c1)
+# 验证奇异值分解，通过对角线矩阵验证
+CU, CS, CV = torch.diag(c1)
+# 奇异值还原原矩阵
+torch.mm(torch.mm(CU, torch.diag(CS)), CV.t())
+# 降维，根据SVD输出结果，进行降维
+# 操作：索引出所有的行，第0列。然后变成三行一列向量
+U1 = CU[:, 0].reshape(3, 1)
+# 同理
+V1 = CV[:, 0].reshape(1, 3)
+# 证明，同样能还原原矩阵
+C1 = CS[0]
+torch.mm((U1 * C1), V1)
