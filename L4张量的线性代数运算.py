@@ -21,15 +21,16 @@ torch.diag(t1)
 # 1 对角线上元素统一往右上方移动一位, -1左下方偏移一位
 torch.diag(t1, 1)
 
+tt = torch.arange(9).reshape(3, 3)
 # 取上三角矩阵
-torch.triu(t1)
+torch.triu(tt)
 # 上三角矩阵向左下偏移一位
-torch.triu(t1, -1)
+torch.triu(tt, -1)
 # 上三角矩阵向右上偏移一位
-torch.triu(t1, 1)
+torch.triu(tt, 1)
 
 # 取下三角矩阵
-torch.tril(t1)
+torch.tril(tt)
 
 # 矩阵的基本运算
 '''
