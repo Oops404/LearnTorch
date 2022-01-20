@@ -1,4 +1,5 @@
 import torch
+from torch.nn import functional as F
 
 # y = ax + b  =>  ln(y) = ln(ax + b)
 # y = ax + b  =>  e^y = e^(ax + b)
@@ -37,12 +38,20 @@ print(and_hat)
 
 # 其他常见二分类转换函数
 # ReLU,σ = {
-#       z,  (z > 0)
-#       0,  (z <= 0)
+#   z,  (z > 0)
+#   0,  (z <= 0)
 # }
 # 本质上就是 MAX(z, 0)
 
 # 双曲正切函数 tanh = σ = (e^(2z) - 1) / (e^(2z) + 1)
-# 双曲正切求导 tanh'(z) = 1- tanh^2(z)
+# 双曲正切求导 tanh'(z) = 1 - tanh^2(z)
 
-# sign 信号函数， if z>0 为 1 if z<=0 为 0。
+# sign 信号函数，1 if z > 0 else 0
+# ------------------------------------------------------------------------
+X1 = torch.tensor([[0, 0], [1, 0], [0, 1], [1, 1]], dtype=torch.float32)
+torch.random.manual_seed(996)
+dense = torch.nn.Linear(2, 1)
+zhat = dense(X1)
+sigma = torch.sigmoid(zhat)  # torch.sign / F.relu / torch.tanh
+y = [int(x) for x in sigma >= 0.5]
+print(y)
