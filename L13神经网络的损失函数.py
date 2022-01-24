@@ -93,9 +93,8 @@ criterion = nn.BCEWithLogitsLoss()
 loss = criterion(zhat, y)
 print(loss)
 # --------------------------------------------------------------
-# 多酚类交叉熵，由二分类推到而来
 """
-对于多酚类问题，σ即softmax返回的结果。
+多酚类交叉熵，由二分类推到而来，对于多酚类问题，σ即softmax返回的结果。
     P_k = P(yhat_i = k | x_i, w) = σ
     
 假设有三分类问题[1,2,3]，三类别概率为：
@@ -104,17 +103,17 @@ print(loss)
     P_3 = P(yhat_i = 3 | x_i, w) = σ_3
     
 三分类的概率组合很难写出，因此我们将三分类onehot成二分类，(/≧▽≦)/
-    1：（1，0，0）
-    2：（0，1，0）
-    3：（0，0，1）
+    1：（1，0，0），
+    2：（0，1，0），
+    3：（0，0，1），
 假设一个样本有k个分类，三分类即k=3：
     P(yhat_i| x_i, w) = P_1^(y_i(k=1))*P_2^(y_i(k=2))*P_3^(y_i(k=3))
-    递推               = P_1^(y_i(k=1))*P_2^(y_i(k=2))*P_3^(y_i(k=3)) * ... * P_K^(y_i(k=K))
+    递推：             = P_1^(y_i(k=1))*P_2^(y_i(k=2))*P_3^(y_i(k=3)) * ... * P_K^(y_i(k=K))
     由于onehot，(1,0,0)中0部分直接忽略，因此简化得：
-    P(yhat_i| x_i, w) = P_j^(y_i(k=j))，j为真实标签内的编号
+    P(yhat_i| x_i, w) = P_j^(y_i(k=j))，j为真实标签内的编号。
     
 期望概率最大：
-    P = Π(i=1~m) P(yhat_i| x_i, w)
+    P = Π(i=1~m) P(yhat_i | x_i, w)
       = Π(i=1~m) P_j^(y_i(k=j))
       = Π(i=1~m) σ_j^(y_i(k=j))
 和二分类一样求极大似然估计，求对数
@@ -127,9 +126,9 @@ print(loss)
     L(w)  = -Σ(i=1~m) y_i(k=j)ln(σ_j)
             ------------------
                   NLLLOSS
-                              -----------
-                               LogSoftmax
-    NLLLOSS ： 负对数似然 negative log likelihood function
+                              -------
+                              LogSoftmax
+    NLLLOSS：负对数似然 negative log likelihood function
 """
 N = 6 * pow(10, 6)
 X = torch.rand((m, 4), dtype=torch.float32)
