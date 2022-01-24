@@ -16,5 +16,5 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, TensorDataset, DataLoader
 
 """
-炼丹师(ง •_•)ง的成长之路，目的是为了控制变量。
+炼丹师(ง •_•)ง的成长之路，生成器的目的是为了控制变量。
 """
