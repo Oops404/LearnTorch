@@ -179,7 +179,11 @@ def data_class_generator(num_examples=1000, num_inputs=2, num_class=3, deg_dispe
     return _features, _labels
 
 
-# _f, _l = data_class_generator()
-#
-# plt.scatter(_f[:, 0], _f[:, 1], c=_l)
-# plt.show()
+_f1, _l1 = data_class_generator(deg_dispersion=[6, 2])
+_f2, _l2 = data_class_generator(deg_dispersion=[6, 4])
+
+plt.subplot(121)
+plt.scatter(_f1[:, 0], _f1[:, 1], c=_l1)
+plt.subplot(122)
+plt.scatter(_f2[:, 0], _f2[:, 1], c=_l2)
+plt.show()
